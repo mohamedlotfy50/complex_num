@@ -1,0 +1,9 @@
+name: complex
+description: A typed complex number library that perform oprations on real and imaginary parts
+homepage: https://github.com/mohamedlotfy50/complex_num
+
+environment:
+  sdk: '>=2.18.0 <3.0.0'
+
+dev_dependencies:
+  test: ^1.16.0
