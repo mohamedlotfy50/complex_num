@@ -44,3 +44,11 @@ E _typeParsing<E extends num>(String source) {
   }
   return temp1!;
 }
+
+num _cosh(num x) {
+  return (math.exp(x) + math.exp(-x)) / 2;
+}
+
+num _sinh(num x) {
+  return (math.exp(x) - math.exp(-x)) / 2;
+}
