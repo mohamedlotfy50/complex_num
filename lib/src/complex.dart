@@ -2,7 +2,7 @@ import 'dart:math' as math;
 part 'operations.dart';
 part 'complex_base.dart';
 
-class Complex<T extends num, E extends num> extends _BaseComplex<T, E> {
+class Complex<T extends num, E extends num> extends _BaseComplex {
   factory Complex.parse(String source) {
     final parsed = tryPars<T, E>(source);
     assert(parsed != null);
@@ -11,7 +11,7 @@ class Complex<T extends num, E extends num> extends _BaseComplex<T, E> {
   static Complex<R, I>? tryPars<R extends num, I extends num>(String source) {
     final split = _spliter(source);
     var r = 0 as R;
-    var j = 0 as I;
+    var i = 0 as I;
 
     assert(split.isNotEmpty || split.length == 2);
 
@@ -19,16 +19,16 @@ class Complex<T extends num, E extends num> extends _BaseComplex<T, E> {
 
     if (split.length == 2) {
       //
-      j = _typeParsing<I>(split[split.length - 1]);
+      i = _typeParsing<I>(split[split.length - 1]);
 
-      return Complex<R, I>(r, j);
+      return Complex<R, I>(r, i);
     }
   }
 
   factory Complex([T? real, E? imaginary]) {
-    final i = real ?? 0 as T;
-    final j = imaginary ?? 0 as E;
-    return Complex._(i, j);
+    var r = real ?? (T == double ? 0.0 : 0) as T;
+    var i = imaginary ?? (E == double ? 0.0 : 0) as E;
+    return Complex._(r, i);
   }
 
   const Complex._(this._real, this._img);

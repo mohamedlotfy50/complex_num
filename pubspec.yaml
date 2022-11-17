@@ -1,4 +1,4 @@
-name: complex
+name: complex_num
 description: A typed complex number library that perform oprations on real and imaginary parts
 homepage: https://github.com/mohamedlotfy50/complex_num
 
