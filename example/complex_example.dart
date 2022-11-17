@@ -12,8 +12,9 @@ void main() {
   // print(mult.toString());
   // print(div.toString());
   var c = Complex(5, 3);
-  print(c.acos());
-  print(c.asin());
-  print(c.atan());
+  var c2 = Complex(3, 5);
+  print(c.isClose(c));
+  print(c.isClose(c2));
+
   // print(cos(radians));
 }

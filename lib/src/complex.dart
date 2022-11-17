@@ -143,22 +143,6 @@ class Complex<T extends num, E extends num> extends Object {
     return sinh() / cosh();
   }
 
-  Complex<num, num> acosh() {
-    throw UnimplementedError();
-  }
-
-  Complex<num, num> asinh() {
-    throw UnimplementedError();
-  }
-
-  Complex<num, num> atanh() {
-    throw UnimplementedError();
-  }
-
-  bool isClose() {
-    throw UnimplementedError();
-  }
-
   Complex<num, num> cos() {
     var r = math.cos(real) * _cosh(imaginary);
     var i = math.sin(real) * _sinh(imaginary);
@@ -205,6 +189,29 @@ class Complex<T extends num, E extends num> extends Object {
     if (identical(this, other)) return true;
 
     return other is Complex<T, E> && other._real == _real && other._img == _img;
+  }
+
+  Complex<num, num> acosh() {
+    var val = this + (this * this - Complex(1, 0)).sqrt();
+
+    return val.log();
+  }
+
+  Complex<num, num> asinh() {
+    var val = this + (this * this + Complex(1, 0)).sqrt();
+
+    return val.log();
+  }
+
+  Complex<num, num> atanh() {
+    var val = (Complex(1, 0) + this) / (Complex(1, 0) - this);
+
+    return val.log() * Complex(1 / 2);
+  }
+
+  bool isClose(Complex other, {double relTol = 1e-09, double absTotal = 0.0}) {
+    return (this - other).abs() <=
+        math.max(relTol * math.max(abs(), other.abs()), absTotal);
   }
 
   @override
