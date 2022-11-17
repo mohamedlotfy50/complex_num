@@ -1,22 +1,48 @@
-<!-- 
-This README describes the package. If you publish this package to pub.dev,
-this README's contents appear on the landing page for your package.
+# ComplexNum
 
-For information about how to write a good package README, see the guide for
-[writing package pages](https://dart.dev/guides/libraries/writing-package-pages). 
-
-For general information about developing packages, see the Dart guide for
-[creating packages](https://dart.dev/guides/libraries/create-library-packages)
-and the Flutter guide for
-[developing packages and plugins](https://flutter.dev/developing-packages). 
--->
-
-TODO: Put a short description of the package here that helps potential users
-know whether this package might be useful for them.
+A Typed Complex Number library implements mathematical functions for imaginary numbers.The Complex Class accept integers, floating-point numbers or complex numbers as arguments.
+Like Other Dart data types Complex class extends **Object** class
+ 
 
 ## Features
 
-TODO: List what your package can do. Maybe include images, gifs, or videos.
+### polar coordinates
+
+- [X] Phase
+- [X] Modulus
+- [X] Rectangular
+
+### Power and logarithmic functions
+
+- [X] Exponential
+- [X] Log == Ln
+- [X] Log with base 10
+- [X] Square root
+
+### Trigonometric functions
+
+- [X] Sine
+- [X] Cosine
+- [X] Tangent
+- [X] Inverse Sine
+- [X] Inverse Cosine
+- [X] Inverse Tangent
+
+### Hyperbolic functions
+
+- [X] Hyperbolic sine
+- [X] Hyperbolic Cosine
+- [X] Hyperbolic Tangent
+- [X] Inverse Hyperbolic sine
+- [X] Inverse Hyperbolic Cosine
+- [X] Inverse Hyperbolic Tangent
+
+### Classification functions
+
+- [X] Finite
+- [X] Infinite
+- [X] NaN
+- [X] Closeness
 
 ## Getting started
 
@@ -32,8 +58,5 @@ to `/example` folder.
 const like = 'sample';
 ```
 
-## Additional information
+## License
 
-TODO: Tell users more about the package: where to find more information, how to 
-contribute to the package, how to file issues, what response they can expect 
-from the package authors, and more.
