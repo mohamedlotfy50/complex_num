@@ -46,17 +46,76 @@ Like Other Dart data types Complex class extends **Object** class
 
 ## Getting started
 
-TODO: List prerequisites and provide or point to information on how to
-start using the package.
+### Initialization
 
-## Usage
-
-TODO: Include short and useful examples for package users. Add longer examples
-to `/example` folder. 
+```dart 
+  final c1 = Complex(7, 5.5);
+  final c2 = Complex();
+  final c3 = Complex(5);
+```
+Ouputs
 
 ```dart
-const like = 'sample';
+(7+5.5𝑖)
+(0+0𝑖)
+(5+0𝑖)
+
+```
+And the type is Detected autmaticly
+
+```dart
+Complex<int, double>
+Complex<num, num>
+Complex<int, num>
+
+```
+You can also explicitly define the type
+
+```dart 
+  final c = Complex<double, double>();
+
+```
+The output would be 
+
+```dart
+(0+0.0𝑖)
+
+```
+
+
+### Arithmetic operations
+
+
+```dart
+ final c2 = Complex<int, double>() +
+      Complex(1, 5) * Complex<int, double>(3, 2) / Complex(10, 10);
+```
+Outputs
+
+```dart
+(0.5+1.2𝑖)
+
+```
+
+### Other Operations
+
+```dart
+  final c1 = Complex(7, 5.5).phase();
+  final c2 = Complex<int, double>(8, 3).exp();
+  final c3 = Complex(5, 2).cos();
+  final c4 = Complex(5, 2).sin();
+```
+Outputs
+
+```dart
+
+0.6659692373791098
+(-2951.1260398524787+420.67281515745424𝑖)
+(1.0671926518731156-3.4778844858991573𝑖)
+(-3.6076607742131563+1.0288031496599335𝑖)
+
 ```
 
 ## License
 
+[Apache License 2.0](https://github.com/mohamedlotfy50/complex_num/blob/main/LICENCE)
