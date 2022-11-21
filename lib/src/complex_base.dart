@@ -17,7 +17,5 @@ abstract class _BaseComplex<T extends num, E extends num> extends Object {
 
   bool isNaN();
 
-  bool isNaNi();
-
   bool isClose(Complex other, {double relTol = 1e-09, double absTotal = 0.0});
 }

@@ -1,3 +1,3 @@
-import '../lib/complex.dart';
+import '../lib/src/complex.dart';
 
 void main() {}

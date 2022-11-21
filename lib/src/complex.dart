@@ -1,14 +1,14 @@
 // Copyright (c) 2022, Mohamed Lotfy.
 // for details. All rights reserved. Use of this source code is governed by a
-// apache license that can be found in the LICENSE file.
+//  BSD 3-clause license that can be found in the LICENSE file.
 import 'dart:math' as math;
 
 part 'complex_base.dart';
 part 'functions.dart';
 
 ///
-/// Representation of Dart imaginary numbers containing double specific constants
-/// and operations and specializations of operations
+/// Representation of Dart imaginary numbers containing complex specific
+/// constants and operations and specializations of operations
 
 class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   const Complex._(this._real, this._img);
@@ -36,7 +36,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// A floating-point representation is composed of a mantissa and an optional
   /// The [source] must not be `null`.
   ///
-  /// whitespaces is ignored.
+  /// white-spaces is ignored.
   ///
   /// If the [source] string is not a valid Complex literal, the []
   /// is called with the [source] as argument, and its return value is
@@ -62,6 +62,42 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
     return parsed!;
   }
 
+  /// Floating-point positive infinity. Equivalent to
+  /// ```dart
+  /// Complex<double, double>(double.infinity, 0.0)
+  /// ```.
+  static Complex<double, double> infinite() {
+    return Complex<double, double>(double.infinity, 0.0);
+  }
+
+  /// Complex number with zero real part and positive infinity imaginary part.
+  /// Equivalent to
+  /// ```dart
+  /// Complex<double, double>(0.0, double.infinity)
+  /// ```.
+  static Complex<double, double> infinitei() {
+    return Complex<double, double>(0.0, double.infinity);
+  }
+
+  /// A floating-point “not a number” (NaN) value. Equivalent to
+  /// ```dart
+  /// Complex<double, double>(double.nan, 0.0)
+  /// ```.
+
+  static Complex<double, double> nan() {
+    return Complex<double, double>(double.nan, 0.0);
+  }
+
+  /// Complex number with zero real part and NaN imaginary part.
+  ///  Equivalent to
+  /// ```dart
+  /// Complex<double, double>(0.0, double.nan)
+  /// ```.
+
+  static Complex<double, double> nani() {
+    return Complex<double, double>(0.0, double.nan);
+  }
+
   /// Parse [source] as a complex literal and return its value.
   ///
   /// Like [Complex.parse], except that this function returns `null`
@@ -70,7 +106,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// Example:
   /// ```dart
   /// var value = Complex.tryParse('3.14'); // 3.14+0i
-  /// value = Complex.tryParse('  3'); // 3.14+0i
+  /// value = Complex.tryParse('  3'); // 3+0i
   /// value = Complex.tryParse('1+5i'); // 1+5i
   /// value = Complex.tryParse('.0'); // 0.0
   /// value = Complex.tryParse('  1+ 5i '); // 1+5i
@@ -80,19 +116,20 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// ```
   static Complex<R, I>? tryPars<R extends num, I extends num>(String source) {
     final split = _spliter(source);
-    var r = 0 as R;
-    var i = 0 as I;
-
-    if (split.isNotEmpty || split.length == 2) {
+    R? r;
+    I? i;
+    if (split.isEmpty || split.length != 2) {
       return null;
     }
 
     r = _typeParsing<R>(split[0]);
 
-    if (split.length == 2) {
-      //
-      i = _typeParsing<I>(split[split.length - 1]);
+    i = _typeParsing<I>(split[split.length - 1]);
+
+    if (r == null || i == null) {
+      return null;
     }
+
     return Complex<R, I>(r, i);
   }
 
@@ -104,6 +141,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
 
   /// returns the imaginary part value without the i symbol
   E get imaginary => _img;
+
   @override
   Complex operator +(Complex other) {
     final iTotal = real + other.real;
@@ -118,6 +156,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
     return Complex(iTotal, jTotal);
   }
 
+  @override
   Complex operator *(Complex other) {
     final iTotal = real * other.real - imaginary * other.imaginary;
     final jTotal = real * other.imaginary + imaginary * other.real;
@@ -134,16 +173,38 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
     return Complex(iTotal, jTotal);
   }
 
+  /// casting the [Complex] to specific type
   @override
   Complex<R, I> asType<R extends num, I extends num>() {
-    return Complex<R, I>();
+    final R r;
+    final I i;
+
+    if (R == T) {
+      r = real as R;
+    } else {
+      var temp = real is double && R != double ? real.toInt() : real;
+      r = _typeParsing<R>('$temp')!;
+    }
+
+    if (I == E) {
+      i = imaginary as I;
+    } else {
+      var temp = imaginary is double && R != double ? imaginary.toInt() : real;
+
+      i = _typeParsing<I>('$temp')!;
+    }
+    return Complex<R, I>(r, i);
   }
 
+  /// Return true if both the real and imaginary parts of [Complex] are finite,
+  /// otherwise return false.
   @override
   bool isFinite() {
     return real.isFinite || imaginary.isFinite;
   }
 
+  /// Return true if either the real or the imaginary part of [Complex] is
+  /// an infinity, otherwise return false.
   @override
   bool isInfinite() {
     return real.isInfinite || imaginary.isInfinite;
@@ -156,20 +217,30 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
     return other is Complex<T, E> && other._real == _real && other._img == _img;
   }
 
+  /// Return true if the values [Complex] and [other] are close to each other
+  /// and false otherwise.
+  /// Whether or not two values are considered close is determined according
+  /// to given absolute and relative tolerances.
+  /// [relTol] is the relative tolerance – it is the maximum allowed difference
+  /// between [Complex] and [other], relative to
+  /// the larger absolute value of [Complex] and [other]. For
+  /// example, to set a tolerance of 5%, pass [relTol]:0.05.
+  /// The default tolerance
+  /// is 1e-09, which assures that the two values are the same within
+  /// about 9 decimal digits. [relTol] must be greater than zero
+  /// [absTotal] is the minimum absolute tolerance – useful for
+  /// comparisons near zero [absTotal] must be at least zero.
   @override
   bool isClose(Complex other, {double relTol = 1e-09, double absTotal = 0.0}) {
     return abs(this - other) <=
         math.max(relTol * math.max(abs(this), abs(other)), absTotal);
   }
 
+  /// Return true if either the real or the imaginary part of [Complex] is a
+  /// NaN, and false otherwise.
   @override
   bool isNaN() {
-    return real.isNaN;
-  }
-
-  @override
-  bool isNaNi() {
-    return imaginary.isNaN;
+    return real.isNaN || imaginary.isNaN;
   }
 
   /// Provide a representation of this [Complex] value.
@@ -182,7 +253,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// gives the same value again: `c == Complex.parse(c.toString())`.
 
   @override
-  String toString() => '$_real${_img > -1 ? "+" : ""}$_img\u{1D456}';
+  String toString() => '$_real${_img.sign == -1 ? '' : '+'}$_img\u{1D456}';
 
   /// Returns a hash code for a both real and imaginary values.
   ///

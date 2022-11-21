@@ -118,4 +118,4 @@ Outputs
 
 ## License
 
-[Apache License 2.0](https://github.com/mohamedlotfy50/complex_num/blob/main/LICENCE)
+[BSD 3-clause license](https://github.com/mohamedlotfy50/complex_num/blob/main/LICENCE)
