@@ -7,16 +7,22 @@ List<String> _spliter(String source) {
   var lastIndex = source[len - 1];
   if (lastIndex == 'i' || lastIndex == '\u{1D456}') {
     source = source.substring(0, len - 1);
-    for (var i = 0; i < len - 2; i++) {
-      if (source[i] == '-' || source[i] == '+') {
-        data
-          ..add(source.substring(0, i))
-          ..add(source.substring(i + 1));
-        break;
-      } else if (i == len - 3) {
-        data
-          ..add('')
-          ..add('');
+    if (source.isEmpty) {
+      data
+        ..add('0')
+        ..add('1');
+    } else {
+      for (var i = 0; i < len - 2; i++) {
+        if (source[i] == '-' || source[i] == '+') {
+          data
+            ..add(source.substring(0, i))
+            ..add(source.substring(i + 1));
+          break;
+        } else if (i == len - 3) {
+          data
+            ..add('0')
+            ..add(source);
+        }
       }
     }
   } else {
