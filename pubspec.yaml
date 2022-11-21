@@ -1,6 +1,7 @@
 name: complex_num
 description: A typed complex number library that perform oprations on real and imaginary parts
 homepage: https://github.com/mohamedlotfy50/complex_num
+version: 1.0.0
 
 environment:
   sdk: '>=2.18.0 <3.0.0'
