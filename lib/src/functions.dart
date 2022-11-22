@@ -12,16 +12,16 @@ List<String> _spliter(String source) {
         ..add('0')
         ..add('1');
     } else {
-      for (var i = 0; i < len - 2; i++) {
-        if (source[i] == '-' || source[i] == '+') {
+      for (var i = 0; i < len - 1; i++) {
+        if (i == len - 2) {
+          data
+            ..add('0')
+            ..add(source);
+        } else if (source[i] == '-' || source[i] == '+') {
           data
             ..add(source.substring(0, i))
             ..add(source.substring(i + 1));
           break;
-        } else if (i == len - 3) {
-          data
-            ..add('0')
-            ..add(source);
         }
       }
     }
@@ -30,7 +30,6 @@ List<String> _spliter(String source) {
       ..add(source)
       ..add('0');
   }
-
   return data;
 }
 

@@ -57,7 +57,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// Instead of `Complex.parse(string, (string) { ... })`,
   /// you should use `Complex.tryParse(string) ?? (...)`.
   factory Complex.parse(String source) {
-    final parsed = tryPars<T, E>(source);
+    final parsed = tryParse<T, E>(source);
     assert(parsed != null);
     return parsed!;
   }
@@ -112,9 +112,9 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// value = Complex.tryParse('  1+ 5i '); // 1+5i
   /// value = Complex.tryParse('6i'); // 0+6i
   /// value = Complex.tryParse('a'); // null
-  /// value = Complex.tryParse('0xFF'); // null
+  /// value = Complex.tryParse('0xFF'); // 255+0𝑖
   /// ```
-  static Complex<R, I>? tryPars<R extends num, I extends num>(String source) {
+  static Complex<R, I>? tryParse<R extends num, I extends num>(String source) {
     final split = _spliter(source);
     R? r;
     I? i;
