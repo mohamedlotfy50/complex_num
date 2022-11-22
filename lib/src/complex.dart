@@ -108,7 +108,7 @@ class Complex<T extends num, E extends num> implements _BaseComplex<T, E> {
   /// var value = Complex.tryParse('3.14'); // 3.14+0i
   /// value = Complex.tryParse('  3'); // 3+0i
   /// value = Complex.tryParse('1+5i'); // 1+5i
-  /// value = Complex.tryParse('.0'); // 0.0
+  /// value = Complex.tryParse('.0'); // 0.0+0i
   /// value = Complex.tryParse('  1+ 5i '); // 1+5i
   /// value = Complex.tryParse('6i'); // 0+6i
   /// value = Complex.tryParse('a'); // null

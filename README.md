@@ -81,6 +81,33 @@ The output would be
 (0+0.0𝑖)
 
 ```
+### Parsing strings
+
+
+```dart
+   var c1 = Complex.parse('3.14'); 
+   var c2 = Complex.tryParse('  3'); 
+   var c3 = Complex.tryParse('1+5i'); 
+   var c4 = Complex.tryParse('.0');
+   var c5 = Complex.tryParse('  1+ 5i '); 
+   var c6 = Complex.tryParse('6i'); 
+   var c7 = Complex.tryParse('a'); 
+   var c8 = Complex.tryParse('0xFF'); 
+
+```
+
+Ouputs
+
+```dart
+3.14+0i
+3+0i
+1+5i
+0.0+0i
+1+5i
+0+6i
+null
+255+0𝑖
+```
 
 
 ### Arithmetic operations
